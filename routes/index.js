@@ -31,7 +31,7 @@ router.post('/CadastraProduto', async (req, res) => {
 })
 
 
-router.post('/editar', async(req, res) => {
+router.post('/editar', async (req, res) => {
   try{
     const ID = req.body.hdId
     const Insert = {
