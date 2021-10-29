@@ -1,5 +1,13 @@
 <%- include('./templates/header') %>
-
+<% if(typeof session === 'undefined'){%>
+  <script language="JavaScript">
+    fetch('/', {
+      method: 'GET',
+    }).then(res => {
+      window.location = "/"
+    })
+  </script>
+<% } %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,8 +84,9 @@
 
 
   <!-- Button trigger modal -->
-
-
+<% if(error.length > 0){ %>
+<label for="" class="alert alert-danger"><%= error %></label>
+<% } %>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

@@ -8,7 +8,7 @@ router.get('/',  async (req, res) => {
   try{
       await Produtos.find({}, function(err,pr){
       if (err) return console.error(err)
-      res.render('index', {produtos: pr, diretorio:__dirname})
+      res.render('index', {produtos: pr, diretorio:__dirname, error: req.flash('numberError'), session: req.session.login})
     }).clone()
   }catch(err){
     console.log(err);
@@ -23,13 +23,16 @@ router.post('/CadastraProduto', async (req, res) => {
       descricao: req.body.descricao,
       fornecedor: req.body.fornecedor,
     }
+    if (isNaN(Insert.preco)){
+      req.flash('numberError', 'Não é permitido letras no preço!')
+      res.redirect('/')
+    }
     await new Produtos(Insert).save()
     res.redirect('/')
   }catch(err){
     console.log(err)
   }
 })
-
 
 router.post('/editar', async (req, res) => {
   try{
@@ -48,7 +51,6 @@ router.post('/editar', async (req, res) => {
     console.log(err)
   }
 })
-
 
 router.get('/excluir/:id', async (req, res) => {
   try{
